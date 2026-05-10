@@ -14,9 +14,15 @@
         .falling-icon { position: fixed; top: -50px; z-index: 200; font-size: 28px; user-select: none; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
+        /* Cambio para permitir scroll en celular */
         .section { position: absolute; width: 100%; height: 100%; display: none; z-index: 10; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,0.85); padding: 15px; box-sizing: border-box; overflow-y: auto; }
         .active { display: flex; animation: fadeIn 1s; }
         
+        @media (max-width: 768px) {
+            .section { display: none; justify-content: flex-start; padding-top: 50px; }
+            .section.active { display: flex; }
+        }
+
         .card-main { background: rgba(255, 255, 255, 0.05); border: 2px solid var(--fucsia); padding: 20px; border-radius: 25px; width: 90%; max-width: 800px; box-shadow: var(--glow); position: relative; z-index: 20; box-sizing: border-box; }
         
         .img-portada { width: 100%; max-width: 300px; border-radius: 15px; border: 2px solid var(--fucsia); margin-bottom: 15px; box-shadow: var(--glow); }
@@ -28,12 +34,10 @@
         .btn-nav { background: none; border: 2px solid var(--fucsia); color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; margin: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
         .btn-nav:hover { background: var(--fucsia); color: black; box-shadow: var(--glow); }
 
-        /* CAMBIO 1: Contenedor con Scroll Permanente en móvil */
+        /* Ajuste de contenedor de post-its */
         #postit-container { width: 100%; height: 75vh; position: relative; }
         @media (max-width: 768px) {
-            #postit-container { height: auto; min-height: 1200px; margin-bottom: 50px; }
-            .section { display: none; justify-content: flex-start; padding-top: 40px; }
-            .section.active { display: flex; }
+            #postit-container { height: auto; min-height: 1300px; margin-bottom: 100px; }
         }
 
         .postit { 
@@ -45,17 +49,20 @@
         @media (min-width: 768px) { .postit { width: 130px; font-size: 0.7rem; } }
         .postit.visible { opacity: 1; transform: scale(1) rotate(var(--r)); }
         
-        /* CAMBIO 2: Clase para sobreponer el post-it clickeado */
-        .postit.active-top { z-index: 500 !important; transform: scale(1.15) rotate(0deg) !important; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+        /* Clase para sobreponer post-it */
+        .postit.top-layer { z-index: 500 !important; transform: scale(1.1) rotate(0deg) !important; box-shadow: 0 0 20px white; }
 
         .photo-card { 
             position: absolute; width: auto; max-width: 220px; height: auto; background: white; padding: 8px; border: 4px solid var(--fucsia); border-radius: 12px; box-shadow: var(--glow); animation: popCardLegacy 5s forwards; z-index: 150; pointer-events: none; 
         }
+        
         .photo-card.horizontal { max-width: 450px; width: 90%; }
+
         @media (min-width: 768px) { 
             .photo-card { max-width: 320px; } 
             .photo-card.horizontal { max-width: 500px; }
         }
+
         .photo-card img { width: 100%; height: auto; display: block; border-radius: 6px; }
 
         @keyframes popCardLegacy { 
@@ -123,7 +130,7 @@
         <div class="card-main">
             <img src="JUDY.jpg" style="width:100px; border-radius: 50%; border: 2px solid var(--fucsia); margin-bottom: 10px;">
             <h2>Determinación Pura</h2>
-            <p>Te puse este nombre porque, al igual que Judy Hopps, representas una voluntad que no conoce imposibles. Admiro profundamente cómo enfrentas cada reto con esa valentía inquebrantable.</p>
+            <p>Te puse este nombre porque, al igual que Judy Hopps, representas una voluntad que no conoce imposibles. Admiro profundamente cómo enfrentas cada reto con esa valentía inquebrantable, demostrando que no importa el tamaño del obstáculo, sino la fuerza del corazón para superarlo. Eres la prueba de que se puede ser dulce y una guerrera al mismo tiempo.</p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
     </div>
@@ -132,7 +139,7 @@
         <div class="card-main">
             <img src="Dupla.gif" style="width: 100%; max-width: 500px; border-radius: 20px; border: 3px solid var(--fucsia); margin-bottom: 10px;">
             <h2>Lecciones de Vida</h2>
-            <p>Nuestra amistad ha sido una de mis mejores maestras. Me has enseñado que la lealtad no es una palabra que se dice, sino una acción que se demuestra estando presente.</p>
+            <p>Nuestra amistad ha sido una de mis mejores maestras. Me has enseñado que la lealtad no es una palabra que se dice, sino una acción que se demuestra estando presente en los momentos clave. He aprendido de ti lo que significa ser una persona genuinamente valiente: alguien que cuida a los suyos por encima de todo y que no teme mostrarse auténtica en un mundo de apariencias.</p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
     </div>
@@ -141,14 +148,14 @@
         <div class="card-main">
             <h2>Tus Tesoros 💖🌻</h2>
             <p class="sec-detalles-p">
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👪👨‍👩‍👧‍👦')">🏠 <b>Familia:</b> Tu motor principal.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💃🎶👯‍♀️👩‍🎤', 'Zootopia Dancing.gif', true)">💃 <b>Salsa:</b> El ritmo que define tu alegría.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🐰✨🐇🥕', 'Rabito.jpg')">🐰 <b>Rabito:</b> Tu compañero fiel.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👯‍♀️❤️🤝🥰', 'REINAS.jpg', true)">🤝 <b>Amigos:</b> Lealtad eterna.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🍝😋🍕')">🍝 <b>Pastas:</b> Tu gusto favorito.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💖💗')">💖 <b>Fucsia:</b> Tu color vibrante.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌅☀️')">🌅 <b>Paisajes:</b> Vistas que inspiran paz.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌻☀️💛')">🌻 <b>Girasoles:</b> Buscando la luz siempre.</span>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👪👨‍👩‍👧‍👦')">🏠 <b>Familia:</b> Tu motor principal, el lazo sagrado que cuidas con todo tu corazón.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💃🎶👯‍♀️👩‍🎤', 'Zootopia Dancing.gif', true)">💃 <b>Salsa:</b> El ritmo que define tu alegría y esa energía que contagias al bailar.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🐰✨🐇🥕', 'Rabito.jpg')">🐰 <b>Rabito:</b> Tu compañero fiel, el que llena tus días de ternura y amor incondicional.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👯‍♀️❤️🤝🥰', 'REINAS.jpg', true)">🤝 <b>Amigos:</b> Esas personas elegidas que tienen la suerte de contar con tu lealtad eterna.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🍝😋🇮🇹🍕')">🍝 <b>Pastas:</b> Ese gusto especial que disfrutas y que es parte de tus momentos favoritos.🍝😋</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💖💗💓💌')">💖 <b>Fucsia:</b> Tu color vibrante, el reflejo exacto de tu esencia única y brillante.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌅☀️🌈☁️')">🌅 <b>Paisajes:</b> Tu amor por las vistas que inspiran paz e inmensidad.☀️🌈</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌻☀️🐝💛')">🌻 <b>Girasoles:</b> Siempre buscando la luz, igual que tú iluminas a los demás.</span>
             </p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
@@ -197,14 +204,14 @@
     }
 
     window.onload = () => {
-        typeWriter("Hoy no es un día cualquiera... eres el regalo más grande todos los días del año. Con todo mi cariño, tu Manzanito 🍎.", "type-inicio", "btn-start");
+        typeWriter("Hoy no es un día cualquiera, es el día más especial del mundo... porque celebramos tu vida, y esto es solo un recordatorio de lo especial que eres para la gente que te rodea. Me siento profundamente orgulloso de la gran mujer que eres; ver tu fuerza y tu dedicación me inspira cada día. Sé que a veces el camino se pone difícil, pero tú no te rindes, y esa valentía es lo que más admiro de ti. Por eso, yo siempre estaré aquí a tu lado para animarte, apoyarte y ser tu refugio en cualquier momento. Hoy es tu día especial, pero para mí, eres el regalo más grande todos los días del año. Con todo mi cariño, tu Manzanito 🍎.", "type-inicio", "btn-start");
     };
 
     function nav(id) {
         currentSection = id;
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if(id === 'sec-discurso') typeWriter("Llegó el día de revelar mi proyecto secreto... después de esforzarme en aprender cada cosa sobre ti. Con cariño de Tu Manzano.", "type-final", "btn-ver-regalo");
+        if(id === 'sec-discurso') typeWriter("Llego el día de revelar mi proyecto secreto. Sé que no he estado tan presente como quisiera... pero quiero compensarlo recordándote lo especial que eres para mí y para todos. Por eso pense en hacerte el mejor regalo que se me pudo ocurrir, y es algo que solo yo podía hacer, después de conocerte y esforzarme en aprender cada cosa sobre ti. Sin mas preámbulos con cariño de Tu Manzano.", "type-final", "btn-ver-regalo");
     }
 
     function iniciar() {
@@ -219,7 +226,6 @@
                 const p = document.createElement('div');
                 p.className = 'postit'; p.innerText = m;
                 
-                // Posicionamiento
                 if(isMobile) {
                     p.style.left = (i % 2 === 0 ? "5%" : "52%");
                     p.style.top = (i * 65) + "px";
@@ -230,11 +236,10 @@
 
                 p.style.setProperty('--r', (Math.random() * 20 - 10) + "deg");
                 
-                // Función click para superponer
                 p.onclick = (e) => { 
                     e.stopPropagation(); 
-                    document.querySelectorAll('.postit').forEach(el => el.classList.remove('active-top'));
-                    p.classList.add('active-top');
+                    document.querySelectorAll('.postit').forEach(el => el.classList.remove('top-layer'));
+                    p.classList.add('top-layer');
                     explosionEmoji(e.clientX, e.clientY); 
                 };
 
@@ -259,7 +264,9 @@
     }
 
     function handleGlobalClick(e) {
-        if(regaloAbierto && currentSection === 'sec-final') spawnCards(3); 
+        if(regaloAbierto && currentSection === 'sec-final') {
+            spawnCards(3); 
+        }
     }
 
     function interaccionRegalo(e) {
@@ -275,32 +282,41 @@
         const box = document.getElementById('box-present');
         box.style.display = "none";
         regaloAbierto = true;
+        
         const audio = document.getElementById('bgMusic');
         audio.src = "musica 2.mp3";
         audio.play().catch(()=>{});
+
         const master = document.createElement('div');
         master.className = 'master-balloon';
         document.body.appendChild(master);
+        
         setTimeout(() => {
             for(let j=0; j<100; j++) setTimeout(() => lanzarCorazon(), j * 50);
             master.remove();
+            
             setTimeout(() => {
                 spawnAllCards(); 
-                document.getElementById('final-txt').innerText = "¡Un universo para ti! Toca para ver más.";
+                document.getElementById('final-txt').innerText = "Un universo de recuerdos para ti... ¡Sigue tocando para ver más!";
             }, 5000); 
+
         }, 800);
     }
 
     function spawnAllCards() {
         fotos.forEach((foto, i) => {
-            setTimeout(() => createCard(foto), i * 200);
+            setTimeout(() => {
+                createCard(foto);
+            }, i * 200);
         });
     }
 
     function spawnCards(num) {
         for(let i=0; i<num; i++) {
-            const fotoAleatoria = fotos[Math.floor(Math.random() * fotos.length)];
-            createCard(fotoAleatoria);
+            setTimeout(() => {
+                const fotoAleatoria = fotos[Math.floor(Math.random() * fotos.length)];
+                createCard(fotoAleatoria);
+            }, i * 100);
         }
     }
 
@@ -308,8 +324,9 @@
         const card = document.createElement('div'); card.className = 'photo-card';
         const img = document.createElement('img'); img.src = imgSrc;
         card.appendChild(img);
-        card.style.left = (20 + Math.random() * 60) + "%"; 
-        card.style.top = (20 + Math.random() * 60) + "%";
+        const x = 20 + Math.random() * 60; 
+        const y = 20 + Math.random() * 60;
+        card.style.left = x + "%"; card.style.top = y + "%";
         card.style.setProperty('--tr', (Math.random() * 30 - 15) + 'deg');
         document.body.appendChild(card);
         setTimeout(() => card.remove(), 5000);
@@ -330,23 +347,50 @@
 
     function spawnTesoroIcons(e, emojiString, imgSrc = null, isHorizontal = false) {
         e.stopPropagation();
-        explosionEmoji(e.clientX, e.clientY);
+        const numIcons = 15;
+        const emojis = Array.from(emojiString);
+        
+        for(let i=0; i<numIcons; i++) {
+            const span = document.createElement('span');
+            span.className = 'treasure-icon';
+            span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            span.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            span.style.left = e.clientX + 'px';
+            span.style.top = e.clientY + 'px';
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * 150 + 50; 
+            span.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+            span.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+            span.style.setProperty('--tr', (Math.random() * 720 - 360) + 'deg');
+            document.body.appendChild(span);
+            setTimeout(() => span.remove(), 1000);
+        }
+
         if (imgSrc) {
             const card = document.createElement('div');
             card.className = 'photo-card';
             if(isHorizontal) card.classList.add('horizontal');
             card.style.zIndex = "600";
-            const img = document.createElement('img'); img.src = imgSrc;
+            const img = document.createElement('img');
+            img.src = imgSrc;
             card.appendChild(img);
-            card.style.left = "50%"; card.style.top = "50%";
+            card.style.left = "50%";
+            card.style.top = "50%";
             card.style.transform = "translate(-50%, -50%)"; 
             card.style.animation = "popCardTesoro 3.5s forwards";
             
-            if (!document.getElementById('tesoro-style')) {
-                const s = document.createElement('style');
-                s.id = 'tesoro-style';
-                s.innerHTML = `@keyframes popCardTesoro { 0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 15%, 85% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }`;
-                document.head.appendChild(s);
+            if (!document.getElementById('tesoro-animation-styles')) {
+                const style = document.createElement('style');
+                style.id = 'tesoro-animation-styles';
+                style.innerHTML = `
+                    @keyframes popCardTesoro {
+                        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                        15% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                        85% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                        100% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
             }
             document.body.appendChild(card);
             setTimeout(() => card.remove(), 3500);
