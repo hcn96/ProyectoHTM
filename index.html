@@ -14,16 +14,10 @@
         .falling-icon { position: fixed; top: -50px; z-index: 200; font-size: 28px; user-select: none; pointer-events: none; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-        .section { position: absolute; width: 100%; height: 100%; display: none; z-index: 10; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,0.85); padding: 15px; box-sizing: border-box; }
+        .section { position: absolute; width: 100%; height: 100%; display: none; z-index: 10; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: rgba(0,0,0,0.85); padding: 15px; box-sizing: border-box; overflow-y: auto; }
         .active { display: flex; animation: fadeIn 1s; }
         
-        /* Ajuste para que las secciones con mucho contenido tengan scroll en celular */
-        @media (max-width: 768px) {
-            .section { overflow-y: auto; display: none; justify-content: flex-start; padding-top: 50px; }
-            .section.active { display: flex; }
-        }
-
-        .card-main { background: rgba(255, 255, 255, 0.05); border: 2px solid var(--fucsia); padding: 20px; border-radius: 25px; width: 90%; max-width: 800px; box-shadow: var(--glow); position: relative; z-index: 20; box-sizing: border-box; margin-bottom: 20px; }
+        .card-main { background: rgba(255, 255, 255, 0.05); border: 2px solid var(--fucsia); padding: 20px; border-radius: 25px; width: 90%; max-width: 800px; box-shadow: var(--glow); position: relative; z-index: 20; box-sizing: border-box; }
         
         .img-portada { width: 100%; max-width: 300px; border-radius: 15px; border: 2px solid var(--fucsia); margin-bottom: 15px; box-shadow: var(--glow); }
 
@@ -31,13 +25,15 @@
         h2 { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: var(--fucsia); }
         p { line-height: 1.6; font-size: 0.95rem; }
         
-        .btn-nav { background: none; border: 2px solid var(--fucsia); color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; margin: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; flex-shrink: 0; }
+        .btn-nav { background: none; border: 2px solid var(--fucsia); color: white; padding: 10px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; margin: 8px; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; }
         .btn-nav:hover { background: var(--fucsia); color: black; box-shadow: var(--glow); }
 
-        /* Contenedor de Post-its con scroll en móvil */
-        #postit-container { width: 100%; height: 70vh; position: relative; min-height: 400px; }
+        /* CAMBIO 1: Contenedor con Scroll Permanente en móvil */
+        #postit-container { width: 100%; height: 75vh; position: relative; }
         @media (max-width: 768px) {
-            #postit-container { height: auto; min-height: 1200px; margin-bottom: 100px; }
+            #postit-container { height: auto; min-height: 1200px; margin-bottom: 50px; }
+            .section { display: none; justify-content: flex-start; padding-top: 40px; }
+            .section.active { display: flex; }
         }
 
         .postit { 
@@ -48,22 +44,33 @@
         }
         @media (min-width: 768px) { .postit { width: 130px; font-size: 0.7rem; } }
         .postit.visible { opacity: 1; transform: scale(1) rotate(var(--r)); }
-        /* Clase para resaltar el post-it clickeado */
-        .postit.top { z-index: 500 !important; transform: scale(1.2) rotate(0deg) !important; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+        
+        /* CAMBIO 2: Clase para sobreponer el post-it clickeado */
+        .postit.active-top { z-index: 500 !important; transform: scale(1.15) rotate(0deg) !important; box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
 
-        .photo-card { position: absolute; width: auto; max-width: 220px; height: auto; background: white; padding: 8px; border: 4px solid var(--fucsia); border-radius: 12px; box-shadow: var(--glow); animation: popCardLegacy 5s forwards; z-index: 150; pointer-events: none; }
+        .photo-card { 
+            position: absolute; width: auto; max-width: 220px; height: auto; background: white; padding: 8px; border: 4px solid var(--fucsia); border-radius: 12px; box-shadow: var(--glow); animation: popCardLegacy 5s forwards; z-index: 150; pointer-events: none; 
+        }
         .photo-card.horizontal { max-width: 450px; width: 90%; }
-        @media (min-width: 768px) { .photo-card { max-width: 320px; } .photo-card.horizontal { max-width: 500px; } }
+        @media (min-width: 768px) { 
+            .photo-card { max-width: 320px; } 
+            .photo-card.horizontal { max-width: 500px; }
+        }
         .photo-card img { width: 100%; height: auto; display: block; border-radius: 6px; }
 
-        @keyframes popCardLegacy { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 15% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; } }
+        @keyframes popCardLegacy { 
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 
+            15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; } 
+        }
 
         .mini-emoji { position: fixed; pointer-events: none; z-index: 300; font-size: 25px; animation: explodeEmoji 1s ease-out forwards; }
         @keyframes explodeEmoji { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--ex), var(--ey)) scale(0); opacity: 0; } }
 
         .heart { position: fixed; top: 50%; left: 50%; width: var(--size); height: var(--size); background-color: var(--fucsia); transform: translate(-50%, -50%) rotate(45deg) scale(0); z-index: 160; pointer-events: none; animation: heartExplode 3s ease-out forwards; box-shadow: var(--glow); }
         .heart::before, .heart::after { content: ""; position: absolute; width: 100%; height: 100%; background-color: var(--fucsia); border-radius: 50%; }
-        .heart::before { left: -50%; } .heart::after { top: -50%; }
+        .heart::before { left: -50%; }
+        .heart::after { top: -50%; }
         @keyframes heartExplode { 0% { transform: translate(-50%, -50%) rotate(45deg) scale(0); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) rotate(var(--tr)) scale(var(--finalScale)); opacity: 0; } }
 
         .master-balloon { position: fixed; top: 50%; left: 50%; width: 80px; height: 100px; background: var(--fucsia); border-radius: 50%; z-index: 180; transform: translate(-50%, -50%) scale(0); animation: masterGrow 0.8s ease-in forwards; box-shadow: var(--glow); }
@@ -74,7 +81,10 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .treasure-icon { position: absolute; pointer-events: none; z-index: 100; animation: explodeTreasure 1s ease-out forwards; }
-        @keyframes explodeTreasure { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0) rotate(var(--tr)); opacity: 0; } }
+        @keyframes explodeTreasure { 
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
+            100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0) rotate(var(--tr)); opacity: 0; } 
+        }
         
         .clickable-tesoro { cursor: pointer; position: relative; }
         .sec-detalles-p { text-align: left; padding: 0 10px; font-size: 1rem; line-height: 2; }
@@ -86,7 +96,7 @@
 <div id="universe">
     <div id="sec-1" class="section active">
         <div class="card-main">
-            <img src="Nay R.png" class="img-portada">
+            <img src="Nay R.jpg" class="img-portada">
             <h1>Para Naydu ✨</h1>
             <p id="type-inicio" style="min-height: 60px;"></p>
             <button id="btn-start" class="btn-nav" style="display:none;" onclick="iniciar()">ABRIR TU GALAXIA 🌻</button>
@@ -96,18 +106,16 @@
     <div id="sec-2" class="section">
         <h2 style="color:white; margin-bottom: 10px;">20 Razones por las que eres increíble 📌</h2>
         <div id="postit-container"></div>
-        <button id="btn-next-postit" class="btn-nav" style="display:none; position: relative; z-index: 100;" onclick="nav('sec-menu')">Continuar ✨</button>
+        <button id="btn-next-postit" class="btn-nav" style="display:none; position: relative; z-index: 600;" onclick="nav('sec-menu')">Continuar ✨</button>
     </div>
 
     <div id="sec-menu" class="section">
-        <div class="card-main">
-            <h1>Tu Esencia ✨</h1>
-            <div style="display: flex; flex-direction: column; gap: 8px; width: 100%; align-items: center;">
-                <button class="btn-nav" onclick="nav('sec-yudi')">Por qué "Yudi" 🐰</button>
-                <button class="btn-nav" onclick="nav('sec-aprendi')">Lo que aprendí ✨</button>
-                <button class="btn-nav" onclick="nav('sec-detalles')">Tus favoritos 🌻</button>
-                <button class="btn-nav" onclick="nav('sec-discurso')" style="background:white; color:black; margin-top:10px;">🎁 EL REGALO</button>
-            </div>
+        <h1>Tu Esencia ✨</h1>
+        <div style="display: flex; flex-direction: column; gap: 8px; width: 85%; max-width: 280px;">
+            <button class="btn-nav" onclick="nav('sec-yudi')">Por qué "Yudi" 🐰</button>
+            <button class="btn-nav" onclick="nav('sec-aprendi')">Lo que aprendí ✨</button>
+            <button class="btn-nav" onclick="nav('sec-detalles')">Tus favoritos 🌻</button>
+            <button class="btn-nav" onclick="nav('sec-discurso')" style="background:white; color:black; margin-top:10px;">🎁 EL REGALO</button>
         </div>
     </div>
 
@@ -115,7 +123,7 @@
         <div class="card-main">
             <img src="JUDY.jpg" style="width:100px; border-radius: 50%; border: 2px solid var(--fucsia); margin-bottom: 10px;">
             <h2>Determinación Pura</h2>
-            <p>Te puse este nombre porque representas una voluntad que no conoce imposibles. Admiro profundamente cómo enfrentas cada reto con esa valentía inquebrantable.</p>
+            <p>Te puse este nombre porque, al igual que Judy Hopps, representas una voluntad que no conoce imposibles. Admiro profundamente cómo enfrentas cada reto con esa valentía inquebrantable.</p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
     </div>
@@ -124,7 +132,7 @@
         <div class="card-main">
             <img src="Dupla.gif" style="width: 100%; max-width: 500px; border-radius: 20px; border: 3px solid var(--fucsia); margin-bottom: 10px;">
             <h2>Lecciones de Vida</h2>
-            <p>Nuestra amistad ha sido una de mis mejores maestras. Me has enseñado que la lealtad es una acción que se demuestra estando presente.</p>
+            <p>Nuestra amistad ha sido una de mis mejores maestras. Me has enseñado que la lealtad no es una palabra que se dice, sino una acción que se demuestra estando presente.</p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
     </div>
@@ -133,11 +141,14 @@
         <div class="card-main">
             <h2>Tus Tesoros 💖🌻</h2>
             <p class="sec-detalles-p">
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👪', 'REINAS.png', true)">🏠 <b>Familia:</b> Tu motor principal, el lazo sagrado.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💃', 'Zootopia Dancing.gif', true)">💃 <b>Salsa:</b> El ritmo que define tu alegría.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🐰', 'Rabito.png')">🐰 <b>Rabito:</b> Tu compañero fiel.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🍝')">🍝 <b>Pastas:</b> Tu gusto especial favorito.</span><br>
-                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌻')">🌻 <b>Girasoles:</b> Siempre buscando la luz.</span>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👪👨‍👩‍👧‍👦')">🏠 <b>Familia:</b> Tu motor principal.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💃🎶👯‍♀️👩‍🎤', 'Zootopia Dancing.gif', true)">💃 <b>Salsa:</b> El ritmo que define tu alegría.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🐰✨🐇🥕', 'Rabito.jpg')">🐰 <b>Rabito:</b> Tu compañero fiel.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '👯‍♀️❤️🤝🥰', 'REINAS.jpg', true)">🤝 <b>Amigos:</b> Lealtad eterna.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🍝😋🍕')">🍝 <b>Pastas:</b> Tu gusto favorito.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '💖💗')">💖 <b>Fucsia:</b> Tu color vibrante.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌅☀️')">🌅 <b>Paisajes:</b> Vistas que inspiran paz.</span><br>
+                <span class="clickable-tesoro" onclick="spawnTesoroIcons(event, '🌻☀️💛')">🌻 <b>Girasoles:</b> Buscando la luz siempre.</span>
             </p>
             <button class="btn-nav" onclick="nav('sec-menu')">Volver</button>
         </div>
@@ -158,15 +169,14 @@
 </div>
 
 <script>
-    const mensajes = ["Mujer sumamente confiable 🤝", "Luchadora incansable 💪", "Tu alegría contagia 😊", "Lealtad inquebrantable ❤️", "Amiga incondicional ✨", "Mi mejor Kábala 🍀", "Actitud positiva 🔥", "Determinación pura 🛡️", "Siempre presente 🌟", "Corazón de oro 💛", "Esencia única 💎", "Fuerza imparable ⚡", "Tu sonrisa ilumina 🌻", "Valentía real ⚔️", "Pilar fundamental 🏛️", "Energía positiva 🔋", "Fiel a tus principios 🌈", "Alma llena de luz 🌠", "Buena vibra 🦉", "¡Futura administradora! 🎓"];
-    const fotos = ['Nay R.png','REINAS.png','Rabito.png','Mario 2.png','JUDY.jpg', 'Winnie Pooh.jpg', 'Conejo.gif', 'FELIZ CUMPLEAÑOS.gif', 'Dupla.gif','Helado.png', 'Zootopia2.gif', 'Zootopia Dancing.gif'];
+    const mensajes = ["Mujer sumamente confiable y de palabra 🤝", "Luchadora incansable que nunca se rinde 💪", "Tu alegría contagia a quienes te rodean 😊", "Lealtad inquebrantable en cada acción ❤️", "Amiga incondicional en todo momento ✨", "Eres mi mejor Kábala del universo 🍀", "Actitud positiva ante cualquier reto 🔥", "Determinación que inspira a los demás 🛡️", "Siempre presente para tus amistades cercanas 🌟", "Corazón de oro puro y noble 💛", "Esencia única, auténtica y vibrante 💎", "Fuerza imparable ante la adversidad ⚡", "Tu sonrisa ilumina los días grises 🌻", "Valentía real en cada paso que das ⚔️", "Un pilar fundamental para los que amas 🏛️", "Energía positiva que motiva a seguir 🔋", "Siempre fiel a tus principios y valores 🌈", "Un alma llena de luz y esperanza 🌠", "Buena vibra y sabiduría en tus consejos 🦉", "¡Nuestra futura administradora estrella! 🎓"];
+    const fotos = ['Nay R.jpg','REINAS.jpg','Rabito.jpg','Mario 2.jpg','JUDY.jpg', 'Winnie Pooh.jpg', 'Conejo.gif', 'FELIZ CUMPLEAÑOS.gif', 'Dupla.gif','Helado.jpg', 'Zootopia2.gif', 'Zootopia Dancing.gif'];
     const emojisExplosion = ['🐰', '🌻', '✨', '💖'];
     
     let toquesRegalo = 0;
     let regaloAbierto = false;
     let currentSection = 'sec-1';
 
-    // Generar iconos cayendo
     setInterval(() => {
         const icon = document.createElement('div');
         icon.className = 'falling-icon';
@@ -175,26 +185,26 @@
         icon.style.animationDuration = (Math.random() * 2 + 2) + 's';
         document.body.appendChild(icon);
         setTimeout(() => icon.remove(), 4000);
-    }, 300);
+    }, 200);
 
     function typeWriter(text, id, btnId) {
         let i = 0; const el = document.getElementById(id); el.innerHTML = "";
         function t() {
-            if (i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(t, 35); }
+            if (i < text.length) { el.innerHTML += text.charAt(i); i++; setTimeout(t, 40); }
             else if (btnId) document.getElementById(btnId).style.display = "inline-block";
         }
         t();
     }
 
     window.onload = () => {
-        typeWriter("Hoy no es un día cualquiera, es el día más especial del mundo... porque celebramos tu vida. Eres el regalo más grande todos los días del año. Con cariño, tu Manzanito 🍎.", "type-inicio", "btn-start");
+        typeWriter("Hoy no es un día cualquiera... eres el regalo más grande todos los días del año. Con todo mi cariño, tu Manzanito 🍎.", "type-inicio", "btn-start");
     };
 
     function nav(id) {
         currentSection = id;
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
-        if(id === 'sec-discurso') typeWriter("Llego el día de revelar mi proyecto secreto. He aprendido cada cosa sobre ti para hacerte este regalo. Con cariño de Tu Manzano.", "type-final", "btn-ver-regalo");
+        if(id === 'sec-discurso') typeWriter("Llegó el día de revelar mi proyecto secreto... después de esforzarme en aprender cada cosa sobre ti. Con cariño de Tu Manzano.", "type-final", "btn-ver-regalo");
     }
 
     function iniciar() {
@@ -209,10 +219,10 @@
                 const p = document.createElement('div');
                 p.className = 'postit'; p.innerText = m;
                 
-                // Distribución optimizada para móvil (vertical) o PC (rejilla)
+                // Posicionamiento
                 if(isMobile) {
-                    p.style.left = (i % 2 === 0 ? "10%" : "55%");
-                    p.style.top = (i * 60) + "px";
+                    p.style.left = (i % 2 === 0 ? "5%" : "52%");
+                    p.style.top = (i * 65) + "px";
                 } else {
                     p.style.left = (5 + (i % 4) * 23) + "%"; 
                     p.style.top = (5 + Math.floor(i / 4) * 18) + "%";
@@ -220,78 +230,77 @@
 
                 p.style.setProperty('--r', (Math.random() * 20 - 10) + "deg");
                 
+                // Función click para superponer
                 p.onclick = (e) => { 
                     e.stopPropagation(); 
-                    // Quitar clase top de otros y poner al actual
-                    document.querySelectorAll('.postit').forEach(el => el.classList.remove('top'));
-                    p.classList.add('top');
+                    document.querySelectorAll('.postit').forEach(el => el.classList.remove('active-top'));
+                    p.classList.add('active-top');
                     explosionEmoji(e.clientX, e.clientY); 
                 };
 
                 cont.appendChild(p);
                 setTimeout(() => p.classList.add('visible'), 50);
                 if(i === mensajes.length - 1) document.getElementById('btn-next-postit').style.display = "inline-block";
-            }, i * 100);
+            }, i * 150);
         });
     }
 
     function explosionEmoji(x, y) {
-        for(let i=0; i<8; i++) {
+        for(let i=0; i<10; i++) {
             const span = document.createElement('span');
             span.className = 'mini-emoji';
             span.innerText = emojisExplosion[Math.floor(Math.random()*emojisExplosion.length)];
             span.style.left = x + 'px'; span.style.top = y + 'px';
-            span.style.setProperty('--ex', (Math.random()*200 - 100) + 'px');
-            span.style.setProperty('--ey', (Math.random()*200 - 100) + 'px');
+            span.style.setProperty('--ex', (Math.random()*250 - 125) + 'px');
+            span.style.setProperty('--ey', (Math.random()*250 - 125) + 'px');
             document.body.appendChild(span);
             setTimeout(() => span.remove(), 1000);
         }
     }
 
     function handleGlobalClick(e) {
-        if(regaloAbierto && currentSection === 'sec-final') spawnCards(2); 
+        if(regaloAbierto && currentSection === 'sec-final') spawnCards(3); 
     }
 
     function interaccionRegalo(e) {
         e.stopPropagation();
-        if(regaloAbierto) { spawnCards(2); return; }
+        if(regaloAbierto) { spawnCards(3); return; }
         toquesRegalo++;
         const box = document.getElementById('box-present');
-        box.style.transform = `scale(${1 + (toquesRegalo * 0.3)})`;
-        if(toquesRegalo >= 5) abrirRegaloDefinitivo();
+        box.style.transform = `scale(${1 + (toquesRegalo * 0.4)})`;
+        if(toquesRegalo >= 5) { abrirRegaloDefinitivo(); }
     }
 
     function abrirRegaloDefinitivo() {
         const box = document.getElementById('box-present');
         box.style.display = "none";
         regaloAbierto = true;
-        document.getElementById('bgMusic').src = "musica 2.mp3";
-        document.getElementById('bgMusic').play().catch(()=>{});
-
+        const audio = document.getElementById('bgMusic');
+        audio.src = "musica 2.mp3";
+        audio.play().catch(()=>{});
         const master = document.createElement('div');
         master.className = 'master-balloon';
         document.body.appendChild(master);
-        
         setTimeout(() => {
-            for(let j=0; j<50; j++) setTimeout(() => lanzarCorazon(), j * 60);
+            for(let j=0; j<100; j++) setTimeout(() => lanzarCorazon(), j * 50);
             master.remove();
             setTimeout(() => {
                 spawnAllCards(); 
                 document.getElementById('final-txt').innerText = "¡Un universo para ti! Toca para ver más.";
-            }, 2000);
+            }, 5000); 
         }, 800);
     }
 
     function spawnAllCards() {
         fotos.forEach((foto, i) => {
-            setTimeout(() => createCard(foto), i * 300);
+            setTimeout(() => createCard(foto), i * 200);
         });
     }
 
     function spawnCards(num) {
         for(let i=0; i<num; i++) {
-            const foto = fotos[Math.floor(Math.random() * fotos.length)];
-            createCard(foto);
+            const fotoAleatoria = fotos[Math.floor(Math.random() * fotos.length)];
+            createCard(fotoAleatoria);
         }
     }
 
@@ -301,7 +310,7 @@
         card.appendChild(img);
         card.style.left = (20 + Math.random() * 60) + "%"; 
         card.style.top = (20 + Math.random() * 60) + "%";
-        card.style.setProperty('--tr', (Math.random() * 20 - 10) + 'deg');
+        card.style.setProperty('--tr', (Math.random() * 30 - 15) + 'deg');
         document.body.appendChild(card);
         setTimeout(() => card.remove(), 5000);
     }
@@ -309,12 +318,12 @@
     function lanzarCorazon() {
         const h = document.createElement('div'); h.className = 'heart';
         const angle = Math.random() * Math.PI * 2;
-        const dist = Math.random() * (window.innerWidth/3);
+        const dist = Math.random() * (window.innerWidth/2.5);
         h.style.setProperty('--tx', Math.cos(angle) * dist + "px");
         h.style.setProperty('--ty', Math.sin(angle) * dist + "px");
         h.style.setProperty('--tr', (Math.random() * 360) + "deg");
         h.style.setProperty('--size', (Math.random() * 15 + 10) + "px");
-        h.style.setProperty('--finalScale', Math.random() * 2 + 1);
+        h.style.setProperty('--finalScale', Math.random() * 3 + 1);
         document.body.appendChild(h);
         setTimeout(() => h.remove(), 3000);
     }
@@ -326,13 +335,21 @@
             const card = document.createElement('div');
             card.className = 'photo-card';
             if(isHorizontal) card.classList.add('horizontal');
+            card.style.zIndex = "600";
             const img = document.createElement('img'); img.src = imgSrc;
             card.appendChild(img);
             card.style.left = "50%"; card.style.top = "50%";
             card.style.transform = "translate(-50%, -50%)"; 
-            card.style.zIndex = "600";
+            card.style.animation = "popCardTesoro 3.5s forwards";
+            
+            if (!document.getElementById('tesoro-style')) {
+                const s = document.createElement('style');
+                s.id = 'tesoro-style';
+                s.innerHTML = `@keyframes popCardTesoro { 0%, 100% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 15%, 85% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }`;
+                document.head.appendChild(s);
+            }
             document.body.appendChild(card);
-            setTimeout(() => card.remove(), 4000);
+            setTimeout(() => card.remove(), 3500);
         }
     }
 </script>
